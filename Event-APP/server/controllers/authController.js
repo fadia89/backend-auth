@@ -5,7 +5,7 @@ import User from'../models/users.js';
  const JWT_SECRET = process.env.JWT_SECRET;
 
 export  const createUser = async (req, res) => {
-    const {first_name, last_name, email, password} = req.body;
+    const {first_Name, last_Name, email, password} = req.body;
         try{ 
             const emailVerification = await User.findOne({ email });
       
@@ -17,8 +17,8 @@ export  const createUser = async (req, res) => {
             const hashedPassword = await bcrypt.hash(password, salt)
          
             const newUser = await new User ({
-              first_name,
-              last_name,
+              first_Name,
+              last_Name,
               email,
               password: hashedPassword
             });

@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 
 
 const userSchema = new Schema ({
-    first_name: {
+    first_Name: {
         type: String,
         required: true
     },
-    last_name: {
+    last_Name: {
         type: String,
         required: true
     },
