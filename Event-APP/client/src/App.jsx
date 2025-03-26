@@ -1,36 +1,18 @@
 import './App.css';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
+import { ServicesContext } from './context/servicesContext';
+
 
 function App() {
-  const [services, setServices] = useState(null);
-  const [loading, setLoading] = useState(true);  
-
-  const fetchServices = async () => {
-    try {
-      const response = await axios.get('http://localhost:4000/api/services');
-      //console.log(response);
-      //console.log(response.data);
-      if (response.status === 200) {
-        setServices(response.data); // Mise à jour des services reçus
-      }
-    } catch (err) {
-      console.log(err); // Affichage de l'erreur en cas d'échec de la requête
-    } finally {
-      setLoading(false); // Mise à jour de l'état de loading
-    }
-  };
-
-  useEffect(() => {
-    fetchServices(); // Appel de la fonction fetchServices quand le composant est monté
-  }, []);
-
+  const [services, setServices] = useContext (ServicesContext)
+  //console.log(ServicesContext)
+ 
   return (
     <>
       <h1 className="text-3xl font-bold underline bg-sky-500/50 text-center py-4">Hello, this is my event APP</h1>
 
       {/* Affichage des services ou d'un message de chargement */}
-      {loading ? (
+      {services === null ? (
         <p className="text-center text-lg">Loading...</p> // Affiche "Loading..." tant que les données sont en cours de chargement
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">

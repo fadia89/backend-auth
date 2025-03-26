@@ -14,20 +14,22 @@ const Register = () => {
         e.preventDefault();
         try {
             // Appel API
-            const newUser = await axios.post('http://localhost:4000/api/register', { first_Name, last_Name, email, password });
-            console.log(newUser);  
-            
+            const newUser = await axios.post('http://localhost:4000/api/register', {first_Name, last_Name, email, password});
+            //console.log(newUser);  
+           
             // Vérifie si la création est réussie
             if (newUser.status === 201) {
-                alert(newUser.data);  // Affiche la réponse de l'API
+                //alert("User created successfully!");
+                alert(newUser.data);  // Affiche la réponse de l'API// le message dans le server
                 navigate('/'); // Redirige vers la page d'accueil après l'inscription
             }
         } catch (err) {
             console.log(err);  
 
             // Vérifie si err.response existe et contient des données
-            if (err.response && err.response.data) {
-                alert(err.response.data);  // Affiche le message d'erreur
+            if (err.response) {
+                console.log('Erreur côté serveur :', err.response.data);  // Afficher la réponse de l'erreur serveur
+                alert(`Erreur: ${err.response.data}`);  // Afficher le message d'erreur détaillé
             } else {
                 alert("Une erreur inconnue est survenue. Veuillez réessayer plus tard.");
             }
@@ -51,13 +53,13 @@ const Register = () => {
                 <form onSubmit={handleSubmit} method="POST" className="space-y-6">
                     {/* First Name Field */}
                     <div>
-                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-900">
+                        <label htmlFor="first_Name" className="block text-sm font-medium text-gray-900">
                             First name
                         </label>
                         <div className="mt-2">
                             <input
-                                id="firstName"
-                                name="firstName"
+                                id="firs_tName"
+                                name="first_Name"
                                 type="text"
                                 required
                                 autoComplete="given-name"
@@ -69,13 +71,13 @@ const Register = () => {
 
                     {/* Last Name Field */}
                     <div>
-                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-900">
+                        <label htmlFor="last_Name" className="block text-sm font-medium text-gray-900">
                             Last name
                         </label>
                         <div className="mt-2">
                             <input
-                                id="lastName"
-                                name="lastName"
+                                id="last_Name"
+                                name="last_Name"
                                 type="text"
                                 required
                                 autoComplete="family-name"

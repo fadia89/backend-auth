@@ -1,27 +1,36 @@
-
-import { Link } from 'react-router-dom'; // Importation correcte de Link
+import { Link } from 'react-router'
+import { useContext } from 'react'
+import { ServicesContext } from '../context/servicesContext.jsx' 
+import { AuthContext } from '../context/authContext.jsx' 
 
 const NavBar = () => {
-  return (
-    <nav>
-      <ul className="grid grid-cols-4   justify-self-auto mx-8 ">
-        <li>
-          <Link to="/">Home</Link> 
-        </li>
-        <li>
-          <Link to="/profile">Profile</Link> 
-        </li>
-        <li>
-          <Link to="/contact">Contact</Link> 
-        </li>
-        <li>
-          <Link to="/register">S'inscrire</Link> 
-        </li>
-        
+    const [services, setServices] = useContext(ServicesContext)
+    const {isAuthenticated, setIsAuthenticated} = useContext(AuthContext)
 
-      </ul>
-    </nav>
-  );
-};
+    console.log(isAuthenticated)
+    return (
+        <>
+            <h1>Hello there is {services.length} events</h1>
+            <ul className='bg-gray-500 flex justify-center space-x-4'>
+                <Link to='/'><li>Home</li></Link>
+                {!isAuthenticated ? (
+                    <>
+                        <Link to='/register'><li>Register</li></Link>
+                        <Link to='/login'><li>Login</li></Link>
+                    </>
+                )
 
-export default NavBar;
+                    : (
+                        <>
+                            <Link to='/profile'><li>Profile</li></Link>
+                            <Link to='/logout'><li>logout</li></Link>
+                        </>
+                    )
+                    }
+            </ul>
+        </>
+    )
+}
+
+
+export default NavBar  
