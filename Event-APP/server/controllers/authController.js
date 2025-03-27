@@ -23,7 +23,7 @@ export  const createUser = async (req, res) => {
               password: hashedPassword
             });
             newUser.save();
-            return res.status(201).json(newUser);
+            return res.status(201).json({message: `Welcom ${first_Name}`});
          
         }catch (err) {
             console.log(err);  
@@ -34,29 +34,31 @@ export  const createUser = async (req, res) => {
 
 export const loginUser = async (req,res) => {
     const {email, password} = req.body;
+    //console.log(req.body);
    
     try{
        // Vérifier si l'utilisateur existe avec cet email
       const user= await User.findOne({email});
       if (!user){
-        return res.status(404).json({ message: 'Email or password invalid' });  
+        return res.status(401).json({ message: 'Email or password invalid' });  
       }
       
        // Comparer les mots de passe
       const comparePassword = await bcrypt.compare (password, user.password);
       if (!comparePassword){
-        return res.status(404).json({ message: 'Email or password invalid' });  
+        return res.status(401).json({ message: 'Email or password invalid' });  
       }
       console.log (comparePassword);
          // Si tout est correct, générer le token JWT
          const token = await jwt.sign({ id: user._id }, JWT_SECRET);
         // bien choisir l'info a l'interieur de Token 
-      return res.status(200).json(token);
+        return res.status(200).json({ message: `Welcome ${user.first_Name}`, token });
   
   
     }catch (err) {
     console.log(err);  
     return res.status(500).json({ message: 'Internal server error' }); 
   }
-
 };
+
+

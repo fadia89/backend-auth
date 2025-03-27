@@ -14,13 +14,13 @@ const Register = () => {
         e.preventDefault();
         try {
             // Appel API
-            const newUser = await axios.post('http://localhost:4000/api/register', {first_Name, last_Name, email, password});
-            //console.log(newUser);  
+            const response = await axios.post('http://localhost:4000/api/register', {first_Name, last_Name, email, password});
+            console.log(response);  
            
             // Vérifie si la création est réussie
-            if (newUser.status === 201) {
+            if (response.status === 201) {
                 //alert("User created successfully!");
-                alert(newUser.data);  // Affiche la réponse de l'API// le message dans le server
+                alert(response.data.message);  // Affiche la réponse de l'API// le message dans le server
                 navigate('/'); // Redirige vers la page d'accueil après l'inscription
             }
         } catch (err) {

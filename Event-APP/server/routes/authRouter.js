@@ -10,6 +10,8 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 
 authRouter.post ('/register', createUser);
+
+
   
 
   

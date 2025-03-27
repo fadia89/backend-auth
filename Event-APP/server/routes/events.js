@@ -1,10 +1,10 @@
 import { Router } from "express";
-import authMiddleware from "../middellewars/authMiddleware.js";
+import verifyUser from "../middellewars/verifyUser.js";
 
  const eventRouter = Router()
 
 
-eventRouter.get ('/events', authMiddleware ,(req,res) => {
+eventRouter.get ('/events', verifyUser,(req,res) => {
   res.send ('welecom to my event')
  })
 

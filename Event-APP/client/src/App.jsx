@@ -1,15 +1,35 @@
 import './App.css';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { ServicesContext } from './context/servicesContext';
-
+import { FaMoneyBill, FaTags, FaMapMarkerAlt } from 'react-icons/fa'; // Import des icônes
+import axios from 'axios';
 
 function App() {
-  const [services, setServices] = useContext (ServicesContext)
-  //console.log(ServicesContext)
- 
+  const [services, setServices] = useContext(ServicesContext);
+
+
+  const fechAPI = async () => {
+    try{
+      const reponse = axios.get('http://localhost:4000/api/login',{
+        headers: {
+          'Authorization' : `bearer ${localStorage.getItem ('token')}`
+        }
+      })
+
+    }catch (err){
+
+    }
+  }
+
+
+
+
+
+
+
   return (
     <>
-      <h1 className="text-3xl font-bold underline bg-sky-500/50 text-center py-4">Hello, this is my event APP</h1>
+      <h1 className="text-3xl font-bold underline bg-gray-200 text-center py-4">Hello, this is my event APP</h1>
 
       {/* Affichage des services ou d'un message de chargement */}
       {services === null ? (
@@ -22,10 +42,22 @@ function App() {
               <div className="p-4">
                 <h2 className="text-xl font-semibold text-gray-800">{service.title}</h2>
                 <p className="text-sm text-gray-600">{service.description}</p>
-                <div className="mt-4">
-                  <span className="block text-lg font-semibold text-gray-800">Price: ${service.prix}</span>
-                  <span className="block text-sm text-gray-500">Category: {service.category}</span>
-                  <span className="block text-sm text-gray-500">Location: {service.adresse}</span>
+                <div className="mt-4 space-y-2">
+                  {/* Affichage du prix avec une icône */}
+                  <div className="flex items-center space-x-2">
+                    <FaMoneyBill size={20} className="text-green-500" />
+                    <span className="text-lg font-semibold text-gray-800">Price: ${service.prix}</span>
+                  </div>
+                  {/* Affichage de la catégorie avec une icône */}
+                  <div className="flex items-center space-x-2">
+                    <FaTags size={20} className="text-yellow-500" />
+                    <span className="text-sm text-gray-500">Category: {service.category}</span>
+                  </div>
+                  {/* Affichage de l'adresse avec une icône */}
+                  <div className="flex items-center space-x-2">
+                    <FaMapMarkerAlt size={20} className="text-red-500" />
+                    <span className="text-sm text-gray-500">Location: {service.adresse}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -37,4 +69,5 @@ function App() {
 }
 
 export default App;
+
 
